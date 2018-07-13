@@ -1,16 +1,12 @@
 import { MANUFACTURER, PARSING_EVENT_TYPE } from './../types';
 import { Parser, AutoSpec, AutoSpecParsingEvent, AutoSpecLineItem } from '../types';
 import { Observable, from } from 'rxjs';
-// import { jsdom } from 'jsdom';
-import { parseNum } from 'parse-num';
-
-const jsdom = require("jsdom");
-const JSDOM = jsdom.jsdom;
-
+import { JSDOM } from 'jsdom';
+const parseNum = require('parse-num');
 
 class Sections {
-    baseNodes: any[];
-    optionalOptionNodes: any[];
+    baseNodes: any[] = [];
+    optionalOptionNodes: any[] = [];
     destinationAndHandling: string;
 }
 
@@ -44,7 +40,7 @@ export default class Parser2018 extends Parser {
         return result;
     }
 
-    protected cleanDom(dom: JSDOM): void {
+    protected cleanDom(dom): void {
         let document = dom.window.document;
 
         let clazzez = ['div.summary-row.summary-zip', 'div.summary-row.summary-footer'];
@@ -61,7 +57,7 @@ export default class Parser2018 extends Parser {
         });
     }
 
-    protected extractSections(dom: JSDOM): Sections {
+    protected extractSections(dom): Sections {
         let sections: Sections = null;
         let document = dom.window.document;
 
@@ -80,7 +76,8 @@ export default class Parser2018 extends Parser {
                 }
                 let currentSectionName = sectionNames[currentSection];
                 if (currentNode.className === 'summary-row') {
-                    sections[currentSectionName].push(currentNode);
+                    // console.log(`Current section name: ${currentSectionName}`);
+                    sections[currentSectionName] && sections[currentSectionName].push(currentNode);
                 }
             }
 
@@ -157,7 +154,7 @@ export default class Parser2018 extends Parser {
                 item = new AutoSpecLineItem();
                 item.item = this.getChildNodeText(node, 'h4');
                 item.price = parseNum(this.getChildNodeText(node, 'h5'));
-                base.push(item);
+                optionalOptions.push(item);
             }
 
             autoSpec.optionalOptions = optionalOptions;
@@ -199,6 +196,7 @@ export default class Parser2018 extends Parser {
 
         return new Promise<AutoSpec>((resolve, reject) => {
             let result = this._parse(spec);
+            // console.log(JSON.stringify(result, null, 8));
             if(result) {
                 resolve(result);
             } else {
