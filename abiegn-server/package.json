@@ -1,0 +1,32 @@
+{
+  "name": "abiegn-server",
+  "version": "1.0.0",
+  "description": "Abiegn server side",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/jasmine-ts --project=tsconfig-test.json ./src/**/*.spec.ts",
+    "build": "tsc --project t./tsconfig-prod.json",
+    "build-test": "tsc --project ./tsconfig-test.json",
+    "start": "ts-node ./src/app.ts",
+    "prod": "npm run build && node ./dist/app.js"
+  },
+  "author": "Larry Yu",
+  "license": "Proprietary",
+  "private": true,
+  "dependencies": {
+    "@types/express": "^4.16.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "jsdom": "^11.11.0",
+    "parse-num": "^1.0.0",
+    "path": "^0.12.7",
+    "rxjs": "^6.2.1"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^2.8.8",
+    "jasmine": "^3.1.0",
+    "jasmine-core": "^3.1.0",
+    "jasmine-spec-reporter": "^4.2.1",
+    "jasmine-ts": "^0.2.1"
+  }
+}
