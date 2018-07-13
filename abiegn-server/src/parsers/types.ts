@@ -22,7 +22,7 @@ export class AutoSpec {
     destinationAndHandling: number;
 }
 
-export enum PARSING_EVENT_TYPE { INFO, WARN, ERROR };
+export enum PARSING_EVENT_TYPE { INFO = "INFO", WARNING = "WARNING", ERROR = "ERROR" };
 export class AutoSpecParsingEvent {
     time: Date = new Date();
     manufacturer: string;

@@ -20,7 +20,7 @@ class ParserFactory {
             throw new Error(`No parser found for: ${manufacturer}, ${year}, ${model}`);
         }
 
-        parser.event.subscribe(event => console.log(JSON.stringify(event, null, 4)));
+        // parser.event.subscribe(event => console.log(JSON.stringify(event, null, 4)));
 
         // Read file from local disk
         const readFile = util.promisify(fs.readFile);

@@ -1,50 +1,50 @@
 {
-    "base": [
-            {
-                    "item": "Base Price",
-                    "price": 25780
-            },
-            {
-                    "item": "CVT",
-                    "description": "w/ 1.5L Turbo 4-Cyl. Engine",
-                    "price": 0
-            },
-            {
-                    "item": "Exterior Color",
-                    "description": "Lunar Silver, Metallic",
-                    "price": 0
-            },
-            {
-                    "item": "Interior Color",
-                    "description": "Black Cloth",
-                    "price": 0
-            },
-            {
-                    "item": "Honda Sensing®",
-                    "price": 0
-            },
-            {
-                    "item": "19-inch Alloy Wheels",
-                    "price": 0
-            }
-    ],
-    "optionalOptions": [
-            {
-                    "item": "Body Side Molding",
-                    "price": 225
-            },
-            {
-                    "item": "Front Fender Emblems - Silver",
-                    "price": 50
-            },
-            {
-                    "item": "Rear Bumper Protector",
-                    "price": 140
-            },
-            {
-                    "item": "USB Charger - 2.1Amp",
-                    "price": 120
-            }
-    ],
-    "destinationAndHandling": 895
+        "base": [
+                {
+                        "item": "Base Price",
+                        "price": 25780
+                },
+                {
+                        "item": "CVT",
+                        "price": 0,
+                        "description": "w/ 1.5L Turbo 4-Cyl. Engine"
+                },
+                {
+                        "item": "Exterior Color",
+                        "price": 0,
+                        "description": "Lunar Silver, Metallic"
+                },
+                {
+                        "item": "Interior Color",
+                        "price": 0,
+                        "description": "Black Cloth"
+                },
+                {
+                        "item": "Honda Sensing®",
+                        "price": 0
+                },
+                {
+                        "item": "19-inch Alloy Wheels",
+                        "price": 0
+                }
+        ],
+        "optionalOptions": [
+                {
+                        "item": "Body Side Molding",
+                        "price": 225
+                },
+                {
+                        "item": "Front Fender Emblems - Silver",
+                        "price": 50
+                },
+                {
+                        "item": "Rear Bumper Protector",
+                        "price": 140
+                },
+                {
+                        "item": "USB Charger - 2.1Amp",
+                        "price": 120
+                }
+        ],
+        "destinationAndHandling": 895
 }

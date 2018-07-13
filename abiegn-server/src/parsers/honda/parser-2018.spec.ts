@@ -4,6 +4,7 @@ import Parser2018 from './parser-2018';
 import 'jasmine';
 const fs = require('fs');
 import * as Honda2018Accord from './2018_Honda_Accord.json';
+import * as Honda2018Civic from './2018_Honda_Civic.json';
 
 const resolve = require('path').resolve;
 
@@ -44,6 +45,46 @@ describe("Honda 2018 Accord", () => {
 
         it("Result is correct", () => {
             let answer = JSON.stringify(Honda2018Accord);
+            let result = JSON.stringify(spec);
+            expect(answer === result).toBeTruthy();
+        });
+    });
+});
+
+describe("Honda 2018 Civic", () => {
+    let html: string; 
+    let parser: Parser = new Parser2018();
+    
+    beforeAll((done) => {
+        let htmlFile = resolve('./src/parsers/honda/2018_Honda_Civic.html');
+        // console.log(htmlFile);
+        fs.readFile(htmlFile, 'utf8', (err, text) => {
+            if(err) {
+                throw new Error(`Error reading file ${htmlFile}: ${err}`);
+            }
+            html = text;
+            done();
+        });
+    });
+
+    it("Can read the html file", () => {
+        expect(html).toBeTruthy();
+    });
+
+    describe("Parser", () => {
+        let spec: AutoSpec;
+        
+        beforeAll((done) => {
+            // parser.event.subscribe(event => console.log(JSON.stringify(event, null, 4)));
+            parser.parse(html).then( data => { spec = data; done()} );
+        });
+
+        it("Result is not null", () => {
+            expect(spec).toBeTruthy();
+        });
+
+        it("Result is correct", () => {
+            let answer = JSON.stringify(Honda2018Civic);
             let result = JSON.stringify(spec);
             expect(answer === result).toBeTruthy();
         });

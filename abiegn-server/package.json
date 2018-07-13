@@ -4,7 +4,7 @@
   "description": "Abiegn server side",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/jasmine-ts --project=tsconfig-test.json ./src/**/*.spec.ts",
+    "test": "node_modules/.bin/jasmine-ts --project=tsconfig-test.json --config=jasmine.json",
     "build": "tsc --project t./tsconfig-prod.json",
     "build-test": "tsc --project ./tsconfig-test.json",
     "start": "ts-node ./src/app.ts",
