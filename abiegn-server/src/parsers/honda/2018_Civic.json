@@ -1,0 +1,58 @@
+{
+        "base": [
+                {
+                        "description": "Base Price",
+                        "price": 18940
+                },
+                {
+                        "item": "CVT",
+                        "description": "w/2.0L 4-Cyl. Engine",
+                        "price": 800
+                },
+                {
+                        "item": "Exterior Color",
+                        "description": "Burgundy Night, Pearl",
+                        "price": 0
+                },
+                {
+                        "item": "Interior Color",
+                        "description": "Ivory Cloth",
+                        "price": 0
+                },
+                {
+                        "item": "Honda Sensing®",
+                        "price": 1000
+                }
+        ],
+        "optionalOptions": [
+                {
+                        "item": "17-inch Accessory Alloy Wheels with Tires",
+                        "price": 1646
+                },
+                {
+                        "item": "Body Side Molding\n",
+                        "price": 217
+                },
+                {
+                        "item": "Decklid Spoiler\n",
+                        "price": 299
+                },
+                {
+                        "item": "Door Edge Guards",
+                        "price": 84
+                },
+                {
+                        "item": "All-Season Floor Mats\n",
+                        "price": 142
+                },
+                {
+                        "item": "Automatic-Dimming Mirror\n",
+                        "price": 196
+                },
+                {
+                        "item": "Remote Engine Start System II\n",
+                        "price": 399
+                }
+        ],
+        "destinationAndHandling": 895
+}

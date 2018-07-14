@@ -1,0 +1,54 @@
+{
+        "base": [
+                {
+                        "description": "Base Price",
+                        "price": 33330
+                },
+                {
+                        "item": "AWD 6-Speed Automatic",
+                        "description": "w/ 3.5L V-6 Engine",
+                        "price": 1900
+                },
+                {
+                        "item": "Exterior Color",
+                        "description": "Steel Sapphire, Metallic",
+                        "price": 0
+                },
+                {
+                        "item": "Interior Color",
+                        "description": "Gray Cloth",
+                        "price": 0
+                },
+                {
+                        "item": "18-inch Alloy Wheels",
+                        "price": 0
+                }
+        ],
+        "optionalOptions": [
+                {
+                        "item": "Bike Attachment - Roof Mount",
+                        "price": 188
+                },
+                {
+                        "item": "Crossbars",
+                        "price": 225
+                },
+                {
+                        "item": "Roof Rails",
+                        "price": 525
+                },
+                {
+                        "item": "All-Season Floor Mats",
+                        "price": 208
+                },
+                {
+                        "item": "Cargo Net",
+                        "price": 50
+                },
+                {
+                        "item": "Back-Up Sensors",
+                        "price": 500
+                }
+        ],
+        "destinationAndHandling": 995
+}

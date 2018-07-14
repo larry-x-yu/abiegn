@@ -10,12 +10,6 @@ class Sections {
     destinationAndHandling: string;
 }
 
-class NodeToItemParams {
-    itemTag = 'p'; 
-    priceTag = 'h5';
-    descriptionTag?;
-}
-
 function getChildNodeText(node: HTMLElement, tagName: string, index = 0): string {
     let result = null;
 
@@ -37,6 +31,43 @@ function nodeToItem(node,  {itemTag = 'p', priceTag = 'h5', descriptionTag = und
         if (descriptionTag) {
             item.description = getChildNodeText(node, descriptionTag);
         }
+
+        // Ignore entries without an 'item' or 'description'
+        if (!item.item && !item.description) {
+            item = null;
+        }
+    }
+
+    return item;
+}
+
+function parseBaseNode(node): AutoSpecLineItem {
+    let item: AutoSpecLineItem = null;
+
+    if (node) {
+        item = new AutoSpecLineItem();
+        let ps = node.getElementsByTagName("p");
+        let h4text = getChildNodeText(node, 'h4');
+        if(ps && ps.length) {
+            let p1text = ps[0].textContent;
+            switch(ps.length){
+                case 1: {
+                    item.item = h4text;
+                    if(p1text) item.description = p1text;
+                    break;
+                }
+                case 2: {
+                    let p2text = ps[1].textContent;
+                    item.item = p1text;
+                    item.description = h4text;
+                    if(p2text) item.description += ", " + p2text;
+                    break;
+                }
+                default:
+                    break;
+            } 
+        }
+        item.price = parseNum(getChildNodeText(node, "h5"));
 
         // Ignore entries without an 'item' or 'description'
         if (!item.item && !item.description) {
@@ -92,6 +123,8 @@ export default class Parser2018 extends Parser {
         anchors.forEach(anchor => {
             anchor.parentNode.removeChild(anchor);
         });
+
+        console.log(dom.serialize());
     }
 
     protected extractSections(dom): Sections {
@@ -137,21 +170,27 @@ export default class Parser2018 extends Parser {
         // Base line items
         let base: AutoSpecLineItem[] = [];
         let baseNodes = sections.baseNodes;
+        let item: AutoSpecLineItem;
+
+        for(let node of baseNodes) {
+            item = parseBaseNode(node);
+            if(item) base.push(item);
+        }
 
         // let item = new AutoSpecLineItem();
         // item.item = this.getChildNodeText(baseNodes[0], 'p');
         // item.price = parseNum(this.getChildNodeText(baseNodes[0], 'h5'));
-        let item: AutoSpecLineItem;
+        // let item: AutoSpecLineItem;
 
-        item = nodeToItem(baseNodes[0]);
-        if (item) base.push(item);
+        // item = nodeToItem(baseNodes[0]);
+        // if (item) base.push(item);
 
         // item = new AutoSpecLineItem();
         // item.item = this.getChildNodeText(baseNodes[1], 'h4');
         // item.description = this.getChildNodeText(baseNodes[1], 'p');
         // item.price = parseNum(this.getChildNodeText(baseNodes[1], 'h5'));
-        item = nodeToItem(baseNodes[1], {itemTag: 'h4', descriptionTag: 'p'});
-        if (item) base.push(item);
+        // item = nodeToItem(baseNodes[1], {itemTag: 'h4', descriptionTag: 'p'});
+        // if (item) base.push(item);
 
         // item = new AutoSpecLineItem();
         // item.item = this.getChildNodeText(baseNodes[2], 'p');
@@ -159,11 +198,11 @@ export default class Parser2018 extends Parser {
         // item.description += ', ' + this.getChildNodeText(baseNodes[2], 'p', 1);
         // item.price = parseNum(this.getChildNodeText(baseNodes[2], 'h5'));
         // base.push(item);
-        item = nodeToItem(baseNodes[2], {descriptionTag: 'h4'});
-        if (item) {
-            item.description += ', ' + getChildNodeText(baseNodes[2], 'p', 1);
-            base.push(item);
-        }
+        // item = nodeToItem(baseNodes[2], {descriptionTag: 'h4'});
+        // if (item) {
+            // item.description += ', ' + getChildNodeText(baseNodes[2], 'p', 1);
+            // base.push(item);
+        // }
 
         // item = new AutoSpecLineItem();
         // item.item = this.getChildNodeText(baseNodes[3], 'p');
@@ -171,22 +210,22 @@ export default class Parser2018 extends Parser {
         // item.price = parseNum(this.getChildNodeText(baseNodes[3], 'h5'));
         // base.push(item);
 
-        item = nodeToItem(baseNodes[3], {descriptionTag: 'h4'});
-        if (item) base.push(item);
+        // item = nodeToItem(baseNodes[3], {descriptionTag: 'h4'});
+        // if (item) base.push(item);
 
         // item = new AutoSpecLineItem();
         // item.item = this.getChildNodeText(baseNodes[4], 'h4');
         // item.price = parseNum(this.getChildNodeText(baseNodes[4], 'h5'));
         // base.push(item);
-        item = nodeToItem(baseNodes[4], {itemTag: 'h4'});
-        if (item) base.push(item);
+        // item = nodeToItem(baseNodes[4], {itemTag: 'h4'});
+        // if (item) base.push(item);
 
         // item = new AutoSpecLineItem();
         // item.item = this.getChildNodeText(baseNodes[5], 'h4');
         // item.price = parseNum(this.getChildNodeText(baseNodes[5], 'h5'));
         // base.push(item);
-        item = nodeToItem(baseNodes[5], {itemTag: 'h4'});
-        if (item) base.push(item);
+        // item = nodeToItem(baseNodes[5], {itemTag: 'h4'});
+        // if (item) base.push(item);
 
         autoSpec.base = base;
 

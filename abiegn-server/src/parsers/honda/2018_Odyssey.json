@@ -1,0 +1,50 @@
+{
+        "base": [
+                {
+                        "description": "Base Price",
+                        "price": 29990
+                },
+                {
+                        "item": "9-Speed Automatic",
+                        "description": "w/ 3.5L V-6 Engine",
+                        "price": 0
+                },
+                {
+                        "item": "Exterior Color",
+                        "description": "Modern Steel, Metallic",
+                        "price": 0
+                },
+                {
+                        "item": "Interior Color",
+                        "description": "Gray Cloth",
+                        "price": 0
+                }
+        ],
+        "optionalOptions": [
+                {
+                        "item": "19-inch Accessory Alloy Wheels with Tires",
+                        "price": 3008
+                },
+                {
+                        "item": "Bike Attachment – Roof Mount",
+                        "price": 188
+                },
+                {
+                        "item": "Crossbars",
+                        "price": 195
+                },
+                {
+                        "item": "Roof Rails",
+                        "price": 559
+                },
+                {
+                        "item": "Cargo Bins",
+                        "price": 410
+                },
+                {
+                        "item": "Back-Up Sensors",
+                        "price": 500
+                }
+        ],
+        "destinationAndHandling": 995
+}

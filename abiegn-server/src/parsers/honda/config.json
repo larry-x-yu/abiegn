@@ -1,0 +1,10 @@
+{
+    "2018": {
+        "models": ["Accord", "Civic", "Pilot", "Odyssey"],
+        "parser": "parser-2018"
+    },
+    "2019": {
+        "models": ["Odyssey"],
+        "parser": "parser-2018"
+    }
+}

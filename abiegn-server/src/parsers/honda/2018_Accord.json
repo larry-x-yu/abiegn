@@ -1,23 +1,23 @@
 {
         "base": [
                 {
-                        "item": "Base Price",
+                        "description": "Base Price",
                         "price": 25780
                 },
                 {
                         "item": "CVT",
-                        "price": 0,
-                        "description": "w/ 1.5L Turbo 4-Cyl. Engine"
+                        "description": "w/ 1.5L Turbo 4-Cyl. Engine",
+                        "price": 0
                 },
                 {
                         "item": "Exterior Color",
-                        "price": 0,
-                        "description": "Lunar Silver, Metallic"
+                        "description": "Lunar Silver, Metallic",
+                        "price": 0
                 },
                 {
                         "item": "Interior Color",
-                        "price": 0,
-                        "description": "Black Cloth"
+                        "description": "Black Cloth",
+                        "price": 0
                 },
                 {
                         "item": "Honda Sensing®",
