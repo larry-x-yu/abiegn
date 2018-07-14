@@ -89,6 +89,13 @@ export default class Parser2018 extends Parser {
         // this.eventTemplate.model = model;
     }
 
+    protected findVehicleTitle(html: string): string {
+
+        const re = /<p class="with-your-text">(.*?)<\/p>/i;
+        const match = re.exec(html);
+        return match && match.length>0 && match[1].trim();
+    }
+
     protected extractFragment(html: string): string {
         let result: string = null;
         let idx1 = html.indexOf('<bp_summary class="goLeft">');
@@ -177,56 +184,6 @@ export default class Parser2018 extends Parser {
             if(item) base.push(item);
         }
 
-        // let item = new AutoSpecLineItem();
-        // item.item = this.getChildNodeText(baseNodes[0], 'p');
-        // item.price = parseNum(this.getChildNodeText(baseNodes[0], 'h5'));
-        // let item: AutoSpecLineItem;
-
-        // item = nodeToItem(baseNodes[0]);
-        // if (item) base.push(item);
-
-        // item = new AutoSpecLineItem();
-        // item.item = this.getChildNodeText(baseNodes[1], 'h4');
-        // item.description = this.getChildNodeText(baseNodes[1], 'p');
-        // item.price = parseNum(this.getChildNodeText(baseNodes[1], 'h5'));
-        // item = nodeToItem(baseNodes[1], {itemTag: 'h4', descriptionTag: 'p'});
-        // if (item) base.push(item);
-
-        // item = new AutoSpecLineItem();
-        // item.item = this.getChildNodeText(baseNodes[2], 'p');
-        // item.description = this.getChildNodeText(baseNodes[2], 'h4');
-        // item.description += ', ' + this.getChildNodeText(baseNodes[2], 'p', 1);
-        // item.price = parseNum(this.getChildNodeText(baseNodes[2], 'h5'));
-        // base.push(item);
-        // item = nodeToItem(baseNodes[2], {descriptionTag: 'h4'});
-        // if (item) {
-            // item.description += ', ' + getChildNodeText(baseNodes[2], 'p', 1);
-            // base.push(item);
-        // }
-
-        // item = new AutoSpecLineItem();
-        // item.item = this.getChildNodeText(baseNodes[3], 'p');
-        // item.description = this.getChildNodeText(baseNodes[3], 'h4');
-        // item.price = parseNum(this.getChildNodeText(baseNodes[3], 'h5'));
-        // base.push(item);
-
-        // item = nodeToItem(baseNodes[3], {descriptionTag: 'h4'});
-        // if (item) base.push(item);
-
-        // item = new AutoSpecLineItem();
-        // item.item = this.getChildNodeText(baseNodes[4], 'h4');
-        // item.price = parseNum(this.getChildNodeText(baseNodes[4], 'h5'));
-        // base.push(item);
-        // item = nodeToItem(baseNodes[4], {itemTag: 'h4'});
-        // if (item) base.push(item);
-
-        // item = new AutoSpecLineItem();
-        // item.item = this.getChildNodeText(baseNodes[5], 'h4');
-        // item.price = parseNum(this.getChildNodeText(baseNodes[5], 'h5'));
-        // base.push(item);
-        // item = nodeToItem(baseNodes[5], {itemTag: 'h4'});
-        // if (item) base.push(item);
-
         autoSpec.base = base;
 
         let nodes = sections.optionalOptionNodes;
@@ -253,12 +210,15 @@ export default class Parser2018 extends Parser {
 
     let timeStart = new Date();
     this.raiseEvent("Started parsing at: " + timeStart);
+
+    const vehicleTitle = this.findVehicleTitle(html);
     html = this.extractFragment(html);
     if (html) {
         const dom = new JSDOM(html);
         this.cleanDom(dom);
         let sections = this.extractSections(dom);
         result = this.transform(sections);
+        result.title = vehicleTitle;
     }
 
     let timeEnd = new Date();
