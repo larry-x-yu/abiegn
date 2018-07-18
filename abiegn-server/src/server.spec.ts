@@ -6,13 +6,13 @@ describe("Server", () => {
     let server: any;
 
     beforeAll(async () => {
-        let wrapper =require('./server');
-        server = wrapper.server;
-        let ready = wrapper.ready;
+        server =require('./server');
+        let ready = server['ready'];
         await ready;
     });
 
     afterAll(() => {
+        server['cleanup']();
         server.close();
     });
 

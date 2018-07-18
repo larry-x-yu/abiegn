@@ -12,7 +12,7 @@ const DB_URL = "mongodb://localhost:27017";
 const app = new Koa();
 const router = new Router();
 
-let db;
+let db, client;
 router.get('/nbi/autospecs', async (ctx) => {
     // console.log("Getting a collection from DB...");
     const specs = await db.collection('autospec-parsed').find().toArray();
@@ -36,14 +36,27 @@ const server = app.listen(port, function () {
 // Used by testing tools 
 const ready = new Promise((resolve, reject) => {
     const check = () => {
-        if(!db) {
+        if (!db) {
             setTimeout(check, 100);
         } else {
             resolve(true);
-        }     
+        }
     };
     check();
 });
 
-module.exports = { server, ready };
+const cleanup = () => {
+    if (server) server.close();
+    if (client) client.close();
+}
+
+server['ready'] = ready;
+server['cleanup'] = cleanup;
+
+process.on('SIGINT', () => {
+    console.log('Serer being shutting down, cleanup...');
+    cleanup();
+});
+
+module.exports = server;
 

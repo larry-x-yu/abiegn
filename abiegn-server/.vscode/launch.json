@@ -8,7 +8,7 @@
             "program": "${workspaceFolder}/node_modules/.bin/jasmine-ts",
             "args": [
                 "--config=jasmine.json",
-                "--project=tsconfig-test.json"
+                "--project=tsconfig.json"
                 // "./src/**/*.spec.ts"
             ],
             "cwd": "${workspaceRoot}",
