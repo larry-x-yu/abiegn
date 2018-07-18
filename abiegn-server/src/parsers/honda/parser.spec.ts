@@ -27,7 +27,7 @@ for (let year of years) {
 
         if (Array.isArray(models)) {
             for (let model of models) {
-                describe(`Honda ${year} ${model}`, async () => {
+                describe(`Honda ${year} ${model}`, () => {
                     let html: string;
 
                     beforeAll((done) => {
