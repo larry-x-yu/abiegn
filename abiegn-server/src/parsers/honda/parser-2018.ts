@@ -131,7 +131,7 @@ export default class Parser2018 extends Parser {
             anchor.parentNode.removeChild(anchor);
         });
 
-        console.log(dom.serialize());
+        // console.log(dom.serialize());
     }
 
     protected extractSections(dom): Sections {
@@ -239,7 +239,7 @@ parse(spec: string): Promise < AutoSpec > {
 
     return new Promise<AutoSpec>((resolve, reject) => {
         let result = this._parse(spec);
-        console.log(JSON.stringify(result, null, 8));
+        // console.log(JSON.stringify(result, null, 8));
         if (result) {
             resolve(result);
         } else {
