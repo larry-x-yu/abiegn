@@ -6,7 +6,7 @@ describe("Server", () => {
     let server: any;
 
     beforeAll(async () => {
-        server =require('./server');
+        server =require('../server');
         let ready = server['ready'];
         await ready;
     });
@@ -14,6 +14,10 @@ describe("Server", () => {
     afterAll(() => {
         server['cleanup']();
         server.close();
+    });
+
+    it("Server should be loaded", () => {
+        expect(server).toBeTruthy();
     });
 
     const options = {

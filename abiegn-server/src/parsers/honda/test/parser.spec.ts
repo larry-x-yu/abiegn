@@ -1,9 +1,9 @@
 import { JSDOM } from 'jsdom';
-import { AutoSpec, MANUFACTURER, Parser } from '../types';
+import { AutoSpec, MANUFACTURER, Parser } from '../../types';
 // import Parser2018 from './parser-2018';
 import 'jasmine';
 const fs = require('fs');
-const SupportConfig = require('./config.json');
+const SupportConfig = require('../config.json');
 
 const resolve = require('path').resolve;
 
@@ -18,7 +18,7 @@ for (let year of years) {
     describe(`Honda ${year} models`, () => {
         let parser: Parser;
         beforeAll((done) => {
-            import(`./${parserModule}`).then( wrapper => {
+            import(`../${parserModule}`).then( wrapper => {
                 const Klazz = wrapper.default;
                 parser = new Klazz(); 
                 done();
@@ -31,7 +31,7 @@ for (let year of years) {
                     let html: string;
 
                     beforeAll((done) => {
-                        let htmlFile = resolve(`./src/parsers/honda/${year}_${model}.html`);
+                        let htmlFile = resolve(`./src/parsers/honda/test/data/${year}_${model}.html`);
                         // console.log(htmlFile);
                         fs.readFile(htmlFile, 'utf8', (err, text) => {
                             if (err) {
@@ -59,7 +59,7 @@ for (let year of years) {
                         });
 
                         it("Result is correct", () => {
-                            const answerJson = require(`./${year}_${model}.json`);
+                            const answerJson = require(`./data/${year}_${model}.json`);
                             let answer = JSON.stringify(answerJson);
                             let result = JSON.stringify(spec);
                             expect(answer === result).toBeTruthy();

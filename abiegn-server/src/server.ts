@@ -20,8 +20,9 @@ router.get('/nbi/autospecs', async (ctx) => {
     ctx.body = specs;
 });
 
-const uploader = multer({ dest: 'uploads/' }); 
-router.post('/profile', uploader('avatar'));
+// Example code for uploading files
+// const uploader = multer({ dest: 'uploads/' }); 
+// router.post('/profile', uploader('avatar'));
 
 app.use(router.routes()).use(router.allowedMethods());
 app.use(bodyParser());

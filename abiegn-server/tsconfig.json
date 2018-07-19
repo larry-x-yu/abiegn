@@ -9,9 +9,10 @@
       "baseUrl": "./src"
     },
     "include": [
-      "src/**/*.ts"
+      "src/**/*"
     ],
     "exclude": [
-      "node_modules"
+      "node_modules",
+      "test"
     ]
   }
