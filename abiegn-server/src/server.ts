@@ -3,6 +3,7 @@ import * as Router from 'koa-router';
 import * as bodyParser from 'koa-bodyparser';
 import * as logger from 'koa-logger';
 const mongodb = require('mongodb');
+const multer = require('koa-multer');
 
 // import * as data from './parsers/honda/2018_Civic.json';
 
@@ -18,6 +19,9 @@ router.get('/nbi/autospecs', async (ctx) => {
     const specs = await db.collection('autospec-parsed').find().toArray();
     ctx.body = specs;
 });
+
+const uploader = multer({ dest: 'uploads/' }); 
+router.post('/profile', uploader('avatar'));
 
 app.use(router.routes()).use(router.allowedMethods());
 app.use(bodyParser());

@@ -20,6 +20,7 @@
     "koa-bodyparser": "^4.2.1",
     "koa-generic-session": "^2.0.1",
     "koa-logger": "^3.2.0",
+    "koa-multer": "^1.0.2",
     "koa-router": "^7.4.0",
     "mongodb": "^3.1.1",
     "parse-num": "^1.0.0",
