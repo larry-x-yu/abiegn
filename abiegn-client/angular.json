@@ -30,6 +30,8 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@clr/icons/clr-icons.min.css",
+              "./node_modules/@clr/ui/clr-ui.min.css",
               "src/main.scss"
             ],
             "scripts": [
@@ -83,9 +85,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
-            "styles": [
-              "src/main.scss"
-            ],
+            "styles": ["src/main.scss"],
             "assets": [
               "src/favicon.ico",
               "src/apple-touch-icon.png",
