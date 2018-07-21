@@ -14,6 +14,7 @@ import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { UploadModule } from './upload/upload.module';
 
 // Clarity
 import { ClarityModule } from '@clr/angular';
@@ -29,9 +30,12 @@ import { ClarityModule } from '@clr/angular';
     CoreModule,
     SharedModule,
     HomeModule,
+    UploadModule,
     AboutModule,
     LoginModule,
-    AppRoutingModule,
+    AppRoutingModule,     // The order the routing modules matter, this module should always appear
+                          // after all modules that include a routing-module, otherwise their routes
+                          // won't be recognized by Angular
     ClarityModule,
   ],
   declarations: [AppComponent],
