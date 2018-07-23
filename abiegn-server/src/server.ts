@@ -24,8 +24,15 @@ router.get('/nbi/autospecs', async (ctx) => {
     ctx.body = specs;
 });
 
-const uploader = multer({ dest: 'uploads/' }); 
-router.post('/nbi/upload', uploader.single('specFile'));
+const uploader = multer({ dest: 'uploads/' });
+router.post('/nbi/upload', uploader.single('specFile'), async (ctx, next) => {
+    // ctx.body = {
+    //     filename: ctx.req.specFile.filename
+    // }
+    ctx.status = 200;
+    ctx.body = "Uploaded";
+    console.log("File uploaded.");
+});
 
 app.use(router.routes()).use(router.allowedMethods());
 app.use(bodyParser());
