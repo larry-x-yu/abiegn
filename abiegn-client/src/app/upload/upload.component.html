@@ -1,3 +1,17 @@
-<p>
-  spec-upload works!
-</p>
+<main role="main">
+  <div class="container top-margin">
+    <!-- <form action="/nbi/upload" enctype="multipart/form-data" method="post"> -->
+    <form>
+      <section class="form-block">
+        <div class="custom-file">
+          <input type="file" #file (change)="onSelectionChange($event)" name="specFile" class="custom-file-input" id="validatedCustomFile" accept='.html, .htm' required (change)="onFileChosen($event)">
+          <label class="custom-file-label" for="validatedCustomFile">{{ fileName }}</label>
+          <div class="invalid-feedback">Example invalid custom file feedback</div>
+        </div>
+      </section>
+      <section class="form-block">
+        <button type="button" class="btn btn-primary btn-lg" (click)="upload($event)" [disabled]="!enableUpload()">Upload</button>
+      </section>
+    </form>
+  </div>
+</main>
