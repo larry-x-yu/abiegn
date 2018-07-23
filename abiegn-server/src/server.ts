@@ -4,13 +4,17 @@ import * as bodyParser from 'koa-bodyparser';
 import * as logger from 'koa-logger';
 const mongodb = require('mongodb');
 const multer = require('koa-multer');
+const cors = require('@koa/cors');
 
 // import * as data from './parsers/honda/2018_Civic.json';
 
-const port = '4200';
+const port = '3200';
 const DB_URL = "mongodb://localhost:27017";
 
 const app = new Koa();
+
+app.use(cors());
+
 const router = new Router();
 
 let db, client;
@@ -20,9 +24,8 @@ router.get('/nbi/autospecs', async (ctx) => {
     ctx.body = specs;
 });
 
-// Example code for uploading files
-// const uploader = multer({ dest: 'uploads/' }); 
-// router.post('/profile', uploader('avatar'));
+const uploader = multer({ dest: 'uploads/' }); 
+router.post('/nbi/upload', uploader.single('specFile'));
 
 app.use(router.routes()).use(router.allowedMethods());
 app.use(bodyParser());
