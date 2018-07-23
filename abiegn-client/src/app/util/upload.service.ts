@@ -15,7 +15,8 @@ export class UploadService {
     formData.append('specFile', file, file.name);
 
     const req = new HttpRequest('POST', url, formData, {
-      reportProgress: true
+      reportProgress: true,
+      responseType: 'text'
     });
 
     const progress = new Subject<number>();
