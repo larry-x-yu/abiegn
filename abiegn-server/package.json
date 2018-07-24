@@ -4,11 +4,11 @@
   "description": "Abiegn server side",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/jasmine-ts --project=tsconfig.json --config=jasmine.json",
+    "test": "jasmine-ts --project=tsconfig.json --config=jasmine.json",
     "build": "tsc",
     "copy-static-assets": "ts-node copyStaticAssets.ts",
     "start": "ts-node ./src/server.ts",
-    "prod": "npm run build && node ./dist/server.js",
+    "prod": "npm run build && npm run copy-static-assets && node ./dist/server.js",
     "watch-server": "nodemon --watch 'src/**/*' -e ts,tsx --exec 'ts-node' ./src/server.ts"
   },
   "author": "Larry Yu",
@@ -17,6 +17,7 @@
   "dependencies": {
     "@koa/cors": "^2.2.2",
     "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
     "jsdom": "^11.11.0",
     "koa": "^2.5.2",
     "koa-bodyparser": "^4.2.1",

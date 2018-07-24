@@ -8,11 +8,14 @@ const multer = require('koa-multer');
 const cors = require('@koa/cors');
 const https = require('https');
 const fs = require('fs');
+require('dotenv').load();   // Load environment variables
 
 // import * as data from './parsers/honda/2018_Civic.json';
 
-const port = '3200';
-const DB_URL = "mongodb://localhost:27017";
+const port = process.env.HTTP_PORT || 3200;
+const sport = process.env.HTTPS_PORT || 8443;
+
+const DB_URL = process.env.DB_URL || "mongodb://localhost:27017";
 
 const app = new Koa();
 
@@ -52,8 +55,7 @@ const options = {
     cert: fs.readFileSync('ssl/abiegn.crt', 'utf8')
 }
 
-const sport = 8443;
-https.createServer(options, app.callback()).listen(sport, () => {
+const sserver= https.createServer(options, app.callback()).listen(sport, () => {
     console.log('Abiegn listening on port: ' + sport + '!');
 });
 
@@ -75,6 +77,7 @@ const ready = new Promise((resolve, reject) => {
 
 const cleanup = () => {
     if (server) server.close();
+    if(sserver) sserver.close();
     if (client) client.close();
 }
 
