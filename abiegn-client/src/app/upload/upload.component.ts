@@ -15,6 +15,7 @@ export class UploadComponent implements OnInit {
   specFile: File;
 
   _showProgress = false;
+  uploadProgress = 0;
 
   constructor(private uploadService: UploadService) { }
 
@@ -37,7 +38,8 @@ export class UploadComponent implements OnInit {
   upload($event: any) {
     console.log('Upload clicked');
     this.uploadService.uploadSingleFile(this.specFile).subscribe((percentage: number) => {
-      console.log(`Percentage uploaded: ${percentage}%`);
+      this.uploadProgress = percentage;
+      // console.log(`Percentage uploaded: ${percentage}%`);
     });
     this.showProgress = true;
   }
