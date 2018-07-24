@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jasmine-ts --project=tsconfig.json --config=jasmine.json",
-    "build": "tsc",
+    "build": "tsc && npm run copy-static-assets",
     "copy-static-assets": "ts-node copyStaticAssets.ts",
     "start": "ts-node ./src/server.ts",
     "prod": "npm run build && npm run copy-static-assets && node ./dist/server.js",
@@ -29,7 +29,6 @@
     "parse-num": "^1.0.0",
     "path": "^0.12.7",
     "rxjs": "^6.2.1",
-    "shelljs": "^0.8.2",
     "socket.io": "^2.1.1"
   },
   "devDependencies": {
@@ -42,6 +41,7 @@
     "jasmine-ts": "^0.2.1",
     "nodemon": "^1.18.2",
     "request": "^2.87.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "shelljs": "^0.8.2"
   }
 }
