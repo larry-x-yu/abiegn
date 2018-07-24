@@ -1,3 +1,4 @@
+import { ClarityModule } from '@clr/angular';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,7 +11,8 @@ import { UploadService } from '@app/util/upload.service';
   imports: [
     CommonModule,
     TranslateModule,
-    UploadRoutingModule
+    UploadRoutingModule,
+    ClarityModule
   ],
   declarations: [
     UploadComponent

@@ -4,7 +4,8 @@
     <form>
       <section class="form-block">
         <div class="custom-file">
-          <input type="file" #file (change)="onSelectionChange($event)" name="specFile" class="custom-file-input" id="validatedCustomFile" accept='.html, .htm' required (change)="onFileChosen($event)">
+          <input type="file" #file (change)="onSelectionChange($event)" name="specFile" class="custom-file-input" id="validatedCustomFile"
+            accept='.html, .htm' required (change)="onFileChosen($event)">
           <label class="custom-file-label" for="validatedCustomFile">{{ fileName }}</label>
           <div class="invalid-feedback">Example invalid custom file feedback</div>
         </div>
@@ -15,3 +16,22 @@
     </form>
   </div>
 </main>
+
+<div [style.display]="showProgress ? 'block' : 'none'">
+  <div class="modal">
+    <div class="modal-dialog" role="dialog" aria-hidden="true">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">I have a nice title</h3>
+        </div>
+        <div class="modal-body">
+          <p>But not much to say...</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="button" (click) = "showProgress = false">Cencel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop" aria-hidden="true"></div>
+</div>

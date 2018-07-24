@@ -14,6 +14,8 @@ export class UploadComponent implements OnInit {
   @ViewChild('file') file: any;
   specFile: File;
 
+  _showProgress = false;
+
   constructor(private uploadService: UploadService) { }
 
   ngOnInit() {
@@ -37,5 +39,14 @@ export class UploadComponent implements OnInit {
     this.uploadService.uploadSingleFile(this.specFile).subscribe((percentage: number) => {
       console.log(`Percentage uploaded: ${percentage}%`);
     });
+    this.showProgress = true;
+  }
+
+  set showProgress(show: boolean) {
+    this._showProgress = show;
+  }
+
+  get showProgress(): boolean {
+    return this._showProgress;
   }
 }
