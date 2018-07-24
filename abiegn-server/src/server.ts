@@ -1,10 +1,13 @@
 import * as Koa from 'koa';
+// const app = require('koa')();
 import * as Router from 'koa-router';
 import * as bodyParser from 'koa-bodyparser';
 import * as logger from 'koa-logger';
 const mongodb = require('mongodb');
 const multer = require('koa-multer');
 const cors = require('@koa/cors');
+const https = require('https');
+const fs = require('fs');
 
 // import * as data from './parsers/honda/2018_Civic.json';
 
@@ -43,6 +46,16 @@ app.use(logger());
     db = client.db("abiegn");
     // console.log("Connection to DB is open");
 })();
+
+const options = {
+    key: fs.readFileSync('ssl/abiegn_private.pem', 'utf8'),
+    cert: fs.readFileSync('ssl/abiegn.crt', 'utf8')
+}
+
+const sport = 8443;
+https.createServer(options, app.callback()).listen(sport, () => {
+    console.log('Abiegn listening on port: ' + sport + '!');
+});
 
 const server = app.listen(port, function () {
     console.log('Abiegn listening on port: ' + port + '!');
