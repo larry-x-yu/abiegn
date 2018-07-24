@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploadService } from '@app/util/upload.service';
 
-const DEFAULT_FILENAME = 'Choose a file to upload...';
+const DEFAULT_FILENAME = 'Choose my car configuration (*.html)...';
 
 @Component({
   selector: 'app-upload',
@@ -16,6 +16,7 @@ export class UploadComponent implements OnInit {
 
   _showProgress = false;
   uploadProgress = 0;
+  sub: any;
 
   constructor(private uploadService: UploadService) { }
 
@@ -37,7 +38,7 @@ export class UploadComponent implements OnInit {
 
   upload($event: any) {
     console.log('Upload clicked');
-    this.uploadService.uploadSingleFile(this.specFile).subscribe((percentage: number) => {
+    this.sub = this.uploadService.uploadSingleFile(this.specFile).subscribe((percentage: number) => {
       this.uploadProgress = percentage;
       // console.log(`Percentage uploaded: ${percentage}%`);
     });
@@ -50,5 +51,10 @@ export class UploadComponent implements OnInit {
 
   get showProgress(): boolean {
     return this._showProgress;
+  }
+
+  cancelUpload() {
+    if (this.sub && !this.sub.closed ) { this.sub.unsubscribe(); }
+    this.showProgress = false;
   }
 }
