@@ -9,8 +9,8 @@ const cors = require('@koa/cors');
 const https = require('https');
 const fs = require('fs');
 require('dotenv').load();   // Load environment variables
+const enforceHttps = require('koa-sslify');
 
-// import * as data from './parsers/honda/2018_Civic.json';
 
 const port = process.env.HTTP_PORT || 3200;
 const sport = process.env.HTTPS_PORT || 8443;
@@ -20,6 +20,11 @@ const DB_URL = process.env.DB_URL || "mongodb://localhost:27017";
 const app = new Koa();
 
 app.use(cors());
+
+const opts = {};
+if(sport !== 443) { opts['port'] = sport; }
+
+app.use(enforceHttps(opts));
 
 const router = new Router();
 
