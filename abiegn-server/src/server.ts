@@ -10,7 +10,12 @@ const https = require('https');
 const fs = require('fs');
 require('dotenv').load();   // Load environment variables
 const enforceHttps = require('koa-sslify');
+const socketio = require('socket.io');
+const crypto = require('crypto');
+const path = require('path');
 
+import { AutoSpec } from './parsers/types'
+import ParserFactory from './parsers/parser-factory'
 
 const port = process.env.HTTP_PORT || 3200;
 const sport = process.env.HTTPS_PORT || 8443;
@@ -22,7 +27,7 @@ const app = new Koa();
 app.use(cors());
 
 const opts = {};
-if(sport !== 443) { opts['port'] = sport; }
+if (sport !== 443) { opts['port'] = sport; }
 
 app.use(enforceHttps(opts));
 
@@ -35,14 +40,29 @@ router.get('/nbi/autospecs', async (ctx) => {
     ctx.body = specs;
 });
 
-const uploader = multer({ dest: 'uploads/' });
-router.post('/nbi/upload', uploader.single('specFile'), async (ctx, next) => {
-    // ctx.body = {
-    //     filename: ctx.req.specFile.filename
-    // }
+const uploader = multer({
+    storage: multer.diskStorage({
+        destination: (req, file, cb) => {
+            cb(null, path.join(__dirname, '../uploads'))
+        },
+        filename: (req, file, cb) => {
+            let customFileName = crypto.randomBytes(18).toString('hex'),
+                fileExtension = file.originalname.split('.').pop(); // get file extension from original file name
+            cb(null, customFileName + '.' + fileExtension);
+            console.log("File saved as: " + customFileName + '.' + fileExtension);
+        }
+    })
+});
+
+router.post('/nbi/upload', uploader.single('specFile'), async (ctx: any, next) => {
     ctx.status = 200;
-    ctx.body = "Uploaded";
-    console.log("File uploaded.");
+    ctx.body = "Uploaded at: " + new Date().getTime();
+    console.log("File uploaded as :" + ctx.req.file.filename);
+    console.log("Parsing started at: " + new Date().getTime());
+    const spec: AutoSpec = await ParserFactory.parse(path.join(__dirname, '../uploads/') + ctx.req.file.filename, "Honda", 2018)
+    ctx.body = JSON.stringify(spec);
+    console.log(JSON.stringify(spec));
+    console.log("File parsed at: " + new Date().getTime());
 });
 
 app.use(router.routes()).use(router.allowedMethods());
@@ -60,12 +80,18 @@ const options = {
     cert: fs.readFileSync('ssl/abiegn.crt', 'utf8')
 }
 
-const sserver= https.createServer(options, app.callback()).listen(sport, () => {
+const sserver = https.createServer(options, app.callback()).listen(sport, () => {
     console.log('Abiegn listening on port: ' + sport + '!');
 });
 
 const server = app.listen(port, function () {
     console.log('Abiegn listening on port: ' + port + '!');
+});
+
+const wsServer = new socketio(sserver, { path: '/socket' });
+
+wsServer.on('connection', function (socket) {
+    console.log('a user connected');
 });
 
 // Used by testing tools 
@@ -82,7 +108,8 @@ const ready = new Promise((resolve, reject) => {
 
 const cleanup = () => {
     if (server) server.close();
-    if(sserver) sserver.close();
+    if (sserver) sserver.close();
+    if (wsServer) wsServer.close();
     if (client) client.close();
 }
 
@@ -95,4 +122,3 @@ process.on('SIGINT', () => {
 });
 
 module.exports = server;
-

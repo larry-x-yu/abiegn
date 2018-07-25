@@ -9,10 +9,10 @@ describe("Parser Factory", () => {
         let parsingResult: AutoSpec;
         beforeAll(done => {
             let htmlFile = resolve('./src/parsers/honda/test/data/2018_Accord.html');
-            // console.log(JSON.stringify(htmlFile, null, 8));
-            ParserFactory.parse(htmlFile, MANUFACTURER.HONDA, 2018).subscribe(
-                spec => { parsingResult = spec; done(); }
-            );
+
+            ParserFactory.parse(htmlFile, MANUFACTURER.HONDA, 2018).then(spec => {
+                parsingResult = spec; done();
+            });
         });
 
         it("Returns result", () => {
