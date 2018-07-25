@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploadService } from '@app/util/upload.service';
 
+import * as io from 'socket.io-client';
+
 const DEFAULT_FILENAME = 'Choose my car configuration (*.html)...';
 
 @Component({
@@ -27,7 +29,7 @@ export class UploadComponent implements OnInit {
     this.fileName = e.target.value || this.fileName;
   }
 
-  onSelectionChange() {
+  onSelectionChange(e: any) {
     const files: { [key: string]: File } = this.file.nativeElement.files;
     this.specFile = files[0] || undefined;
   }
@@ -38,6 +40,12 @@ export class UploadComponent implements OnInit {
 
   upload($event: any) {
     console.log('Upload clicked');
+    const socket = io('https://localhost:8443', {path: '/socket'});
+
+    if (socket) {
+      socket.connect();
+    }
+
     this.sub = this.uploadService.uploadSingleFile(this.specFile).subscribe((percentage: number) => {
       this.uploadProgress = percentage;
       // console.log(`Percentage uploaded: ${percentage}%`);
@@ -54,7 +62,7 @@ export class UploadComponent implements OnInit {
   }
 
   cancelUpload() {
-    if (this.sub && !this.sub.closed ) { this.sub.unsubscribe(); }
+    if (this.sub && !this.sub.closed) { this.sub.unsubscribe(); }
     this.showProgress = false;
   }
 }

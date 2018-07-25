@@ -3,7 +3,7 @@ import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/c
 import { Subject } from 'rxjs';
 import { Observable } from 'rxjs';
 
-const url = 'upload';
+const url = 'nbi/upload';
 
 @Injectable()
 export class UploadService {
