@@ -14,7 +14,7 @@ export class AutoSpecLineItem {
 }
 
 export class AutoSpec {
-    title;
+    title: string;
     base: AutoSpecLineItem[];
     packages: AutoSpecLineItem[];
     optionalPackages: AutoSpecLineItem[];
