@@ -19,14 +19,18 @@ export class UploadService {
       responseType: 'text'
     });
 
-    const progress = new Subject<number>();
+    const progress = new Subject<any>();
 
     this.http.request(req).subscribe(event => {
       if (event.type === HttpEventType.UploadProgress) {
         const percentDone = Math.round(100 * event.loaded / event.total);
         progress.next(percentDone);
       } else if (event instanceof HttpResponse) {
-        progress.complete();
+        if (event.ok) {
+          progress.next(event.body);
+        } else {
+          console.log(`Error uploading auto confiugration: status = ${event.status}, statusText=${event.statusText}`);
+        }
       }
     });
 

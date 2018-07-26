@@ -18,6 +18,7 @@ import { UploadModule } from './upload/upload.module';
 
 // Clarity
 import { ClarityModule } from '@clr/angular';
+import { AutoConfigComponent } from './auto-config/auto-config.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,7 @@ import { ClarityModule } from '@clr/angular';
                           // won't be recognized by Angular
     ClarityModule,
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, AutoConfigComponent],
   providers: [
   ],
   bootstrap: [AppComponent]

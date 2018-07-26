@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploadService } from '@app/util/upload.service';
-
-import * as io from 'socket.io-client';
+import { Wait } from '../util/Wait';
+import { CarandorderService } from '@app/util/carandorder.service';
 
 const DEFAULT_FILENAME = 'Choose my car configuration (*.html)...';
 
@@ -21,7 +21,7 @@ export class UploadComponent implements OnInit {
   sub: any;
   progressMessage = '';
 
-  constructor(private uploadService: UploadService) { }
+  constructor(private uploadService: UploadService, private carandorder: CarandorderService) { }
 
   ngOnInit() {
   }
@@ -40,20 +40,20 @@ export class UploadComponent implements OnInit {
   }
 
   upload($event: any) {
-    // const socket = io('https://localhost:8443', {path: '/socket'});
 
-    // if (socket) {
-    //   socket.connect();
-    // }
+    this.showProgress = true;
+    const wait: Wait = new Wait(1000);
+
     this.progressMessage = 'Uploading your configuration...';
-    this.sub = this.uploadService.uploadSingleFile(this.specFile).subscribe((percentage: number) => {
-      this.uploadProgress = percentage;
-      // console.log(`Percentage uploaded: ${percentage}%`);
-      if (percentage === 100) {
+    this.sub = this.uploadService.uploadSingleFile(this.specFile).subscribe(async (res: any) => {
+      if (Number.isInteger(res) && res === 100) {
         this.progressMessage = 'Parsing your configuration...';
+      } else if (!Number.isInteger(res)) {
+        this.carandorder.parsedConfiguration = res;
+        await wait.start();
+        this.showProgress = false;
       }
     });
-    this.showProgress = true;
   }
 
   set showProgress(show: boolean) {

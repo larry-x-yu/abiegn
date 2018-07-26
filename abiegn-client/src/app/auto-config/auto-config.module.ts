@@ -4,23 +4,23 @@ import { ClarityModule } from '@clr/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { UploadRoutingModule } from './upload-routing.module';
-import { UploadComponent } from './upload.component';
+import { AutoConfigRoutingModule } from './auto-config-routing.module';
+import { AutoConfigComponent } from './auto-config.component';
 import { UploadService } from '@app/util/upload.service';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule,
-    UploadRoutingModule,
+    AutoConfigRoutingModule,
     ClarityModule
   ],
   declarations: [
-    UploadComponent
+    AutoConfigComponent
   ],
   providers: [
     UploadService,
     CarandorderService
   ]
 })
-export class UploadModule { }
+export class AutoConfigModule { }
