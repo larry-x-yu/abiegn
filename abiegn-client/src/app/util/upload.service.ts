@@ -9,7 +9,7 @@ const url = 'nbi/upload';
 export class UploadService {
   constructor(private http: HttpClient) { }
 
-  public uploadSingleFile(file: File): Observable<number> {
+  public uploadSingleFile(file: File): Observable<number | AutoSpec> {
 
     const formData: FormData = new FormData();
     formData.append('specFile', file, file.name);
@@ -23,12 +23,9 @@ export class UploadService {
 
     this.http.request(req).subscribe(event => {
       if (event.type === HttpEventType.UploadProgress) {
-
         const percentDone = Math.round(100 * event.loaded / event.total);
-
         progress.next(percentDone);
       } else if (event instanceof HttpResponse) {
-
         progress.complete();
       }
     });

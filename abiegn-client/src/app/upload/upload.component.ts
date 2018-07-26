@@ -19,6 +19,7 @@ export class UploadComponent implements OnInit {
   _showProgress = false;
   uploadProgress = 0;
   sub: any;
+  progressMessage = '';
 
   constructor(private uploadService: UploadService) { }
 
@@ -39,16 +40,18 @@ export class UploadComponent implements OnInit {
   }
 
   upload($event: any) {
-    console.log('Upload clicked');
-    const socket = io('https://localhost:8443', {path: '/socket'});
+    // const socket = io('https://localhost:8443', {path: '/socket'});
 
-    if (socket) {
-      socket.connect();
-    }
-
+    // if (socket) {
+    //   socket.connect();
+    // }
+    this.progressMessage = 'Uploading your configuration...';
     this.sub = this.uploadService.uploadSingleFile(this.specFile).subscribe((percentage: number) => {
       this.uploadProgress = percentage;
       // console.log(`Percentage uploaded: ${percentage}%`);
+      if (percentage === 100) {
+        this.progressMessage = 'Parsing your configuration...';
+      }
     });
     this.showProgress = true;
   }
