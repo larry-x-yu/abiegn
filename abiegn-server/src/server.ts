@@ -57,12 +57,12 @@ const uploader = multer({
 router.post('/nbi/upload', uploader.single('specFile'), async (ctx: any, next) => {
     ctx.status = 200;
     ctx.body = "Uploaded at: " + new Date().getTime();
-    console.log("File uploaded as :" + ctx.req.file.filename);
-    console.log("Parsing started at: " + new Date().getTime());
+    // console.log("File uploaded as :" + ctx.req.file.filename);
+    // console.log("Parsing started at: " + new Date().getTime());
     const spec: AutoSpec = await ParserFactory.parse(path.join(__dirname, '../uploads/') + ctx.req.file.filename, "Honda", 2018)
-    ctx.body = JSON.stringify(spec);
-    console.log(JSON.stringify(spec));
-    console.log("File parsed at: " + new Date().getTime());
+    ctx.body = spec;
+    // console.log(JSON.stringify(spec));
+    // console.log("File parsed at: " + new Date().getTime());
 });
 
 app.use(router.routes()).use(router.allowedMethods());

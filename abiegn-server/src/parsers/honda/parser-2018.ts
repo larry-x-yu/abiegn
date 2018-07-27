@@ -21,7 +21,7 @@ function getChildNodeText(node: HTMLElement, tagName: string, index = 0): string
 }
 
 // use a separate function instead of a class method here: object destructuring is not supported for class method
-function nodeToItem(node,  {itemTag = 'p', priceTag = 'h5', descriptionTag = undefined } = {}): AutoSpecLineItem {
+function nodeToItem(node, { itemTag = 'p', priceTag = 'h5', descriptionTag = undefined } = {}): AutoSpecLineItem {
     let item: AutoSpecLineItem = null;
 
     if (node) {
@@ -48,24 +48,28 @@ function parseBaseNode(node): AutoSpecLineItem {
         item = new AutoSpecLineItem();
         let ps = node.getElementsByTagName("p");
         let h4text = getChildNodeText(node, 'h4');
-        if(ps && ps.length) {
+        if (ps && ps.length) {
             let p1text = ps[0].textContent;
-            switch(ps.length){
+            switch (ps.length) {
                 case 1: {
-                    item.item = h4text;
-                    if(p1text) item.description = p1text;
+                    if (h4text) {
+                        item.item = h4text;
+                        if (p1text) item.description = p1text;
+                    } else {
+                        item.item = p1text;
+                    }
                     break;
                 }
                 case 2: {
                     let p2text = ps[1].textContent;
                     item.item = p1text;
                     item.description = h4text;
-                    if(p2text) item.description += ", " + p2text;
+                    if (p2text) item.description += ", " + p2text;
                     break;
                 }
                 default:
                     break;
-            } 
+            }
         }
         item.price = parseNum(getChildNodeText(node, "h5"));
 
@@ -93,7 +97,7 @@ export default class Parser2018 extends Parser {
 
         const re = /<p class="with-your-text">(.*?)<\/p>/i;
         const match = re.exec(html);
-        return match && match.length>0 && match[1].trim();
+        return match && match.length > 0 && match[1].trim();
     }
 
     protected extractFragment(html: string): string {
@@ -169,84 +173,85 @@ export default class Parser2018 extends Parser {
     }
 
     protected transform(sections: Sections): AutoSpec {
-    let autoSpec: AutoSpec = null;
+        let autoSpec: AutoSpec = null;
 
-    if (sections) {
-        autoSpec = new AutoSpec();
+        if (sections) {
+            autoSpec = new AutoSpec();
 
-        // Base line items
-        let base: AutoSpecLineItem[] = [];
-        let baseNodes = sections.baseNodes;
-        let item: AutoSpecLineItem;
+            // Base line items
+            let base: AutoSpecLineItem[] = [];
+            let baseNodes = sections.baseNodes;
+            let item: AutoSpecLineItem;
 
-        for(let node of baseNodes) {
-            item = parseBaseNode(node);
-            if(item) base.push(item);
+            for (let node of baseNodes) {
+                item = parseBaseNode(node);
+                if (item) base.push(item);
+            }
+
+            autoSpec.base = base;
+
+            let nodes = sections.optionalOptionNodes;
+            let optionalOptions: AutoSpecLineItem[] = [];
+
+            for (let node of nodes) {
+                // item = new AutoSpecLineItem();
+                // item.item = this.getChildNodeText(node, 'h4');
+                // item.price = parseNum(this.getChildNodeText(node, 'h5'));
+                item = nodeToItem(node, { itemTag: 'h4' });
+                if (item) optionalOptions.push(item);
+            }
+
+            autoSpec.optionalOptions = optionalOptions;
+
+            autoSpec.destinationAndHandling = parseNum(sections.destinationAndHandling);
         }
 
-        autoSpec.base = base;
-
-        let nodes = sections.optionalOptionNodes;
-        let optionalOptions: AutoSpecLineItem[] = [];
-
-        for (let node of nodes) {
-            // item = new AutoSpecLineItem();
-            // item.item = this.getChildNodeText(node, 'h4');
-            // item.price = parseNum(this.getChildNodeText(node, 'h5'));
-            item = nodeToItem(node, {itemTag: 'h4'});
-            if(item) optionalOptions.push(item);
-        }
-
-        autoSpec.optionalOptions = optionalOptions;
-
-        autoSpec.destinationAndHandling = parseNum(sections.destinationAndHandling);
+        return autoSpec;
     }
-
-    return autoSpec;
-}
 
     protected _parse(html: string): AutoSpec {
-    let result: AutoSpec = null;
+        let result: AutoSpec = null;
 
-    let timeStart = new Date();
-    this.raiseEvent("Started parsing at: " + timeStart);
+        let timeStart = new Date();
+        this.raiseEvent("Started parsing at: " + timeStart);
 
-    const vehicleTitle = this.findVehicleTitle(html);
-    html = this.extractFragment(html);
-    if (html) {
-        const dom = new JSDOM(html);
-        this.cleanDom(dom);
-        let sections = this.extractSections(dom);
-        result = this.transform(sections);
-        result.title = vehicleTitle;
+        const vehicleTitle = this.findVehicleTitle(html);
+        html = this.extractFragment(html);
+        if (html) {
+            const dom = new JSDOM(html);
+            this.cleanDom(dom);
+            let sections = this.extractSections(dom);
+            result = this.transform(sections);
+            result.title = vehicleTitle;   
+            result.calculateTotal();         
+        }
+
+        let timeEnd = new Date();
+        this.raiseEvent("Stopped parsing at: " + timeEnd);
+        this.raiseEvent("Total parsing time: " + (timeEnd.getTime() - timeStart.getTime()) + " ms");
+
+        return result;
     }
 
-    let timeEnd = new Date();
-    this.raiseEvent("Stopped parsing at: " + timeEnd);
-    this.raiseEvent("Total parsing time: " + (timeEnd.getTime() - timeStart.getTime()) + " ms");
-
-    return result;
-}
-
     protected raiseEvent(message: string, type: PARSING_EVENT_TYPE = PARSING_EVENT_TYPE.INFO): void {
-    const e = this.eventTemplate.copy();
-    e.message = message;
-    e.type = type;
-    this.event.next(e);
-}
+        const e = this.eventTemplate.copy();
+        e.message = message;
+        e.type = type;
+        this.event.next(e);
+    }
 
-parse(spec: string): Promise < AutoSpec > {
+    parse(spec: string): Promise<AutoSpec> {
 
-    return new Promise<AutoSpec>((resolve, reject) => {
-        let result = this._parse(spec);
-        // console.log(JSON.stringify(result, null, 8));
-        if (result) {
-            resolve(result);
-        } else {
-            reject('Invalid file');
-        }
-    });
-}
+        return new Promise<AutoSpec>((resolve, reject) => {
+            let result = this._parse(spec);
+            // console.log(JSON.stringify(result, null, 8));
+            if (result) {
+                resolve(result);
+            } else {
+                reject('Invalid file');
+            }
+        });
+    }
 
 }
 

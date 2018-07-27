@@ -21,6 +21,23 @@ export class AutoSpec {
     options: AutoSpecLineItem[];
     optionalOptions: AutoSpecLineItem[];
     destinationAndHandling: number;
+    total: number;
+
+    calculateTotal() {
+        let total = 0;
+        const values: any[] = Object.values(this);
+        for (let value of values) {
+            if (Array.isArray(value)) {
+                for (let lineItem of value) {
+                    if (lineItem instanceof AutoSpecLineItem) {
+                        total += lineItem.price;
+                    }
+                }
+            }
+        }
+        total += this.destinationAndHandling;
+        this.total = total;
+    }
 }
 
 export enum PARSING_EVENT_TYPE { INFO = "INFO", WARNING = "WARNING", ERROR = "ERROR" };
@@ -34,7 +51,7 @@ export class AutoSpecParsingEvent {
 
     // Returns a new object with an updated time and empty message
     copy(): AutoSpecParsingEvent {
-        return Object.assign({}, this, {time: new Date(), message: '', type: PARSING_EVENT_TYPE.INFO });
+        return Object.assign({}, this, { time: new Date(), message: '', type: PARSING_EVENT_TYPE.INFO });
     }
 }
 
