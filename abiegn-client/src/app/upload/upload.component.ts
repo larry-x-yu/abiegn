@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploadService } from '@app/util/upload.service';
 import { Wait } from '../util/Wait';
 import { CarandorderService } from '@app/util/carandorder.service';
+import { Router } from '@angular/router';
 
 const DEFAULT_FILENAME = 'Choose my car configuration (*.html)...';
 
@@ -21,7 +22,7 @@ export class UploadComponent implements OnInit {
   sub: any;
   progressMessage = '';
 
-  constructor(private uploadService: UploadService, private carandorder: CarandorderService) { }
+  constructor(private uploadService: UploadService, private carandorder: CarandorderService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -52,6 +53,7 @@ export class UploadComponent implements OnInit {
         this.carandorder.parsedConfiguration = res;
         await wait.start();
         this.showProgress = false;
+        this.router.navigateByUrl('/autoconfig');
       }
     });
   }

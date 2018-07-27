@@ -1,3 +1,42 @@
-<p>
-  auto-config works!
-</p>
+<main role="main">
+  <div class="container top-margin">
+    <h3 align="center">{{ autoSpec?.title }}</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="left">Item</th>
+          <th class="left"></th>
+          <th class="left">Description</th>
+          <th class="right">MSRP (US$)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="4" class="left"><strong>Base</strong></td>
+        </tr>
+        <tr *ngFor="let lineItem of autoSpec?.base">
+          <td></td>
+          <td class="left">{{ lineItem.item }}</td>
+          <td class="left">{{ lineItem.description }}</td>
+          <td class="right">{{ lineItem.price | currency }}</td>
+        </tr>
+        <tr>
+          <td colspan="4" class="left"><strong>Options</strong></td>
+        </tr>
+        <tr *ngFor="let lineItem of autoSpec?.optionalOptions">
+          <td></td>
+          <td class="left">{{ lineItem.item }}</td>
+          <td class="left">{{ lineItem.description }}</td>
+          <td class="right">{{ lineItem.price | currency }}</td>
+        </tr>
+        <tr>
+          <td colspan="3" class="left">Destination and Handling</td>
+          <td class="right">{{ autoSpec?.destinationAndHandling | currency }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="right">
+      <strong>MRSP Total: {{ autoSpec?.total | currency }}</strong>
+    </p>
+  </div>
+</main>

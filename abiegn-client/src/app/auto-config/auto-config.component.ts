@@ -8,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AutoConfigComponent implements OnInit {
 
-  constructor(private carandorder: CarandorderService) { }
+  private autoSpec: AutoSpec;
+  constructor(private carandorder: CarandorderService) {
+    this.autoSpec = carandorder.parsedConfiguration;
+  }
 
   ngOnInit() {
   }

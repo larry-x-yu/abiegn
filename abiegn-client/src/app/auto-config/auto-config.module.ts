@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { AutoConfigRoutingModule } from './auto-config-routing.module';
 import { AutoConfigComponent } from './auto-config.component';
-import { UploadService } from '@app/util/upload.service';
 
 @NgModule({
   imports: [
@@ -19,7 +18,6 @@ import { UploadService } from '@app/util/upload.service';
     AutoConfigComponent
   ],
   providers: [
-    UploadService,
     CarandorderService
   ]
 })

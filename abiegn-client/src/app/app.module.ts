@@ -18,7 +18,9 @@ import { UploadModule } from './upload/upload.module';
 
 // Clarity
 import { ClarityModule } from '@clr/angular';
-import { AutoConfigComponent } from './auto-config/auto-config.component';
+
+// Abiegn
+import { AutoConfigModule } from './auto-config/auto-config.module';
 
 @NgModule({
   imports: [
@@ -32,14 +34,15 @@ import { AutoConfigComponent } from './auto-config/auto-config.component';
     SharedModule,
     HomeModule,
     UploadModule,
+    AutoConfigModule,
     AboutModule,
     LoginModule,
     AppRoutingModule,     // The order the routing modules matter, this module should always appear
-                          // after all modules that include a routing-module, otherwise their routes
-                          // won't be recognized by Angular
+    // after all modules that include a routing-module, otherwise their routes
+    // won't be recognized by Angular
     ClarityModule,
   ],
-  declarations: [AppComponent, AutoConfigComponent],
+  declarations: [AppComponent],
   providers: [
   ],
   bootstrap: [AppComponent]

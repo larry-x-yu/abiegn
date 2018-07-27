@@ -16,7 +16,7 @@ export class UploadService {
 
     const req = new HttpRequest('POST', url, formData, {
       reportProgress: true,
-      responseType: 'text'
+      responseType: 'json'
     });
 
     const progress = new Subject<any>();

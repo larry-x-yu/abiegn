@@ -25,4 +25,5 @@ interface AutoSpec {
   options: AutoSpecLineItem[];
   optionalOptions: AutoSpecLineItem[];
   destinationAndHandling: number;
+  total: number;
 }
