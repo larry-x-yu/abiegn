@@ -1,0 +1,26 @@
+<main role="main">
+  <div class="container top-margin">
+    <aw-wizard>
+      <aw-wizard-step stepTitle="Upload Configuration">
+        <app-upload #upload></app-upload>
+        <div class="wz-nav-strip">
+          <button type="button" class="btn btn-primary btn-lg" [disabled]="!upload.canExit()" awNextStep>Next</button>
+        </div>
+      </aw-wizard-step>
+      <aw-wizard-step stepTitle="Adjust Configuration" awOptionalStep>
+        <app-auto-config></app-auto-config>
+        <div class="wz-nav-strip">
+          <button type="button" class="btn btn-primary btn-lg" awNextStep>Next</button>
+          <button type="button" class="btn btn-secondly btn-lg" awPreviousStep>Previous</button>
+        </div>
+      </aw-wizard-step>
+      <aw-wizard-step stepTitle="Confirm Order">
+        Content of Step 3
+        <div class="wz-nav-strip">
+          <button type="button" class="btn btn-primary btn-lg" (click)="finishFunction()">Finish</button>
+          <button type="button" class="btn btn-secondly btn-lg"  awPreviousStep>Previous</button>
+        </div>
+      </aw-wizard-step>
+    </aw-wizard>
+  </div>
+</main>

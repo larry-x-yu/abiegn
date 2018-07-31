@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '@app/core';
-import { UploadComponent } from './upload.component';
+import { OrderflowComponent } from './orderflow.component';
 
 const routes: Routes = [
   Route.withShell([
-    { path: 'upload', component: UploadComponent, data: { title: extract('Upload') } }
+    { path: 'order/wizard', component: OrderflowComponent, data: { title: extract('Order My Car') } }
   ])
 ];
 
@@ -15,4 +15,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class UploadRoutingModule { }
+export class OrderflowRoutingModule { }

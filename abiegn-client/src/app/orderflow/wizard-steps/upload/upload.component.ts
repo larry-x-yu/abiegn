@@ -1,19 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploadService } from '@app/util/upload.service';
-import { Wait } from '../util/Wait';
+import { Wait } from '@app/util/Wait';
 import { CarandorderService } from '@app/util/carandorder.service';
 import { Router } from '@angular/router';
+import { WizardStep } from '../wizard-step';
 
-const DEFAULT_FILENAME = 'Choose my car configuration (*.html)...';
+// const DEFAULT_FILENAME = 'Choose my car configuration (*.html)...';
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.scss']
 })
-export class UploadComponent implements OnInit {
-
-  fileName = DEFAULT_FILENAME;
+export class UploadComponent implements OnInit, WizardStep {
+  // fileName = DEFAULT_FILENAME;
+  fileName: string;
   @ViewChild('file') file: any;
   specFile: File;
 
@@ -21,6 +22,8 @@ export class UploadComponent implements OnInit {
   uploadProgress = 0;
   sub: any;
   progressMessage = '';
+
+  success = false;
 
   constructor(private uploadService: UploadService, private carandorder: CarandorderService, private router: Router) { }
 
@@ -37,11 +40,10 @@ export class UploadComponent implements OnInit {
   }
 
   enableUpload() {
-    return this.fileName !== DEFAULT_FILENAME;
+    return !!this.fileName;
   }
 
   upload($event: any) {
-
     this.showProgress = true;
     const wait: Wait = new Wait(1000);
 
@@ -53,7 +55,8 @@ export class UploadComponent implements OnInit {
         this.carandorder.parsedConfiguration = res;
         await wait.start();
         this.showProgress = false;
-        this.router.navigateByUrl('/autoconfig');
+        // this.router.navigateByUrl('/autoconfig');
+        this.success = true;
       }
     });
   }
@@ -70,4 +73,12 @@ export class UploadComponent implements OnInit {
     if (this.sub && !this.sub.closed) { this.sub.unsubscribe(); }
     this.showProgress = false;
   }
+
+  canEnter(): boolean {
+    return true;
+  }
+  canExit(): boolean {
+    return this.success;
+  }
+
 }

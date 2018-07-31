@@ -1,3 +1,4 @@
+import { WizardStep } from '../wizard-step';
 import { CarandorderService } from '@app/util/carandorder.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -6,14 +7,24 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './auto-config.component.html',
   styleUrls: ['./auto-config.component.scss']
 })
-export class AutoConfigComponent implements OnInit {
+export class AutoConfigComponent implements OnInit, WizardStep {
 
-  private autoSpec: AutoSpec;
+  _autoSpec: AutoSpec;
   constructor(private carandorder: CarandorderService) {
-    this.autoSpec = carandorder.parsedConfiguration;
   }
 
   ngOnInit() {
+  }
+
+  get autoSpec() {
+    return this.carandorder.parsedConfiguration;
+  }
+
+  canEnter(): boolean {
+    return true;
+  }
+  canExit(): boolean {
+    return false;
   }
 
 }

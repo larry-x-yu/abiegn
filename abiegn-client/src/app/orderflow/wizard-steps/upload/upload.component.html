@@ -1,10 +1,9 @@
 <main role="main">
   <div class="container top-margin">
-    <!-- <form action="/nbi/upload" enctype="multipart/form-data" method="post"> -->
     <section class="form-block">
       <div class="custom-file">
-        <input type="file" #file (change)="onSelectionChange($event)" name="specFile" class="custom-file-input" id="validatedCustomFile"
-          accept='.html, .htm' required (change)="onFileChosen($event)">
+        <input type="file" #file placeholder="Choose my car configuration (*.html)..." (change)="onSelectionChange($event)" name="specFile" class="custom-file-input" id="validatedCustomFile"
+          accept='.html' required (change)="onFileChosen($event)">
         <label class="custom-file-label" for="validatedCustomFile">{{ fileName }}</label>
         <div class="invalid-feedback">Example invalid custom file feedback</div>
       </div>

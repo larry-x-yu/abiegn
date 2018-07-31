@@ -1,3 +1,4 @@
+import { OrderflowModule } from './orderflow/orderflow.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -14,13 +15,9 @@ import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { UploadModule } from './upload/upload.module';
 
 // Clarity
 import { ClarityModule } from '@clr/angular';
-
-// Abiegn
-import { AutoConfigModule } from './auto-config/auto-config.module';
 
 @NgModule({
   imports: [
@@ -33,8 +30,7 @@ import { AutoConfigModule } from './auto-config/auto-config.module';
     CoreModule,
     SharedModule,
     HomeModule,
-    UploadModule,
-    AutoConfigModule,
+    OrderflowModule,
     AboutModule,
     LoginModule,
     AppRoutingModule,     // The order the routing modules matter, this module should always appear
